@@ -16,4 +16,8 @@ module RailsTemplater
   def template_runner
     File.join(File.dirname(__FILE__), 'template_framework', 'template_runner.rb')
   end
+
+  def config
+    @config ||= {}
+  end
 end

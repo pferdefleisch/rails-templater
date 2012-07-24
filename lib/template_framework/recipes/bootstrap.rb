@@ -3,14 +3,15 @@ if yes?("\n[CSS] Do you want to add Twitter Bootstrap? [y|n]: ", Thor::Shell::Co
   gem 'rails_bootstrap_helpers'
 
   templater.post_bundler do
-    if options[:compass_installed]
+    if RailsTemplater.config[:compass_installed]
       run 'bundle exec compass install bootstrap'
     else
-      create_file File.join('app', 'assets', 'stylesheets', 'bootstrap.scss') do
+      create_file File.join('app', 'assets', 'stylesheets', 'twitter.scss') do
         "@import 'bootstrap';"
       end
-      append_to_file File.join('app', 'assets', 'stylesheets', 'application.css'),
-                     '//= require bootstrap'
+      insert_into_file File.join('app', 'assets', 'stylesheets', 'application.css'),
+                     "\n *= require twitter",
+                     :after => "*= require_tree ."
     end
   end
 end

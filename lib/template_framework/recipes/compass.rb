@@ -7,7 +7,7 @@ if yes?("\n[Stylesheets] Would you like to use Compass? [y|n]: ", Thor::Shell::C
     '4' => 'Compass with 960.gs'
   }
 
-  options[:compass_installed] = true
+  RailsTemplater.config[:compass_installed] = true
 
   print_table design_options.to_a, :ident => 4
   design_selection = ask("\nOption: ", Thor::Shell::Color::BLUE)
@@ -26,7 +26,13 @@ if yes?("\n[Stylesheets] Would you like to use Compass? [y|n]: ", Thor::Shell::C
   end
 
   unless design_framework == :none
-    remove_file 'app/assets/stylesheets/application.css'
+    app_css_file = File.join('app', 'assets', 'stylesheets', 'application.css')
+
+    insert_into_file app_css_file,
+                     "\n *= require screen",
+                     :after => "*= require_tree ."
+
+    gsub_file app_css_file, /^.*?require_tree.*$/, ''
 
     gem 'compass-rails', group: :assets
 
