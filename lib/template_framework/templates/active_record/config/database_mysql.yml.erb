@@ -12,9 +12,9 @@ development:
   adapter: mysql2
   encoding: utf8
   reconnect: false
-  database: <%= @app_name -%>_development
+  database: <%= @app_name %>_development
   pool: 5
-  username: <%= @username -%>
+  username: <%= @username %>
   password:
   socket: /tmp/mysql.sock
 
@@ -25,9 +25,9 @@ test:
   adapter: mysql2
   encoding: utf8
   reconnect: false
-  database: <%= @app_name -%>_test
+  database: <%= @app_name %>_test
   pool: 5
-  username: <%= @username -%>
+  username: <%= @username %>
   password:
   socket: /tmp/mysql.sock
 
@@ -35,9 +35,9 @@ production:
   adapter: mysql2
   encoding: utf8
   reconnect: false
-  database: <%= @app_name -%>_production
+  database: <%= @app_name %>_production
   pool: 5
-  username: <%= @username -%>
+  username: <%= @username %>
   password:
   socket: /tmp/mysql.sock
 
