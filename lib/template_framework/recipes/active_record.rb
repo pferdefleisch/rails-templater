@@ -11,7 +11,7 @@ if selection == '1'
   @application_name = $app
   @username = ask("\nDatabase username?", Thor::Shell::Color::BLUE)
   gem 'pg'
-  create_file 'config/database.yml', templater.load_template('config/database_postgres.yml', 'active_record')
+  create_file 'config/database.yml', templater.load_template('config/database_postgres.yml.erb', 'active_record')
 else
   gem 'sqlite3'
   create_file 'config/database.yml', templater.load_template('config/database.yml', 'active_record')
