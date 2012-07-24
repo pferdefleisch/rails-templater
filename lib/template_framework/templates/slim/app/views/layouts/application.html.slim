@@ -1,10 +1,8 @@
-! doctype 5
+doctype html
 html
   head
     = csrf_meta_tag
-    /![if lt IE 9]
-      = javascript_include_tag 'html5'
-    /![endif]
+    title <%= @app_name %>
   body
     = yield
     = javascript_include_tag 'application'

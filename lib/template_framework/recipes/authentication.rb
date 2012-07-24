@@ -59,13 +59,11 @@ if yes?("\n[Authentication] Do you want authentication? [y|n]: ", Thor::Shell::C
       run "bundle exec rake db:create:all"
       generate 'devise:install'
       generate "devise #{model_name}"
-      if yes?("\nWould you like to install the devise views?", Thor::Shell::Color::BLUE)
+      if yes?("\nWould you like to install the devise views? [y|n]:", Thor::Shell::Color::BLUE)
         generate 'devise:views'
       end
       run "bundle exec rake db:migrate"
-      template File.expand_path("../../devise/views/pages/home.html.erb", __FILE__),       'app/views/pages/home.html.erb'
-      template File.expand_path("../../devise/controllers/pages_controller.rb", __FILE__), 'app/controllers/pages_controller.rb'
-
+      generate 'controller Page home'
       insert_into_file File.join('config', 'routes.rb'), :after => "Application.routes.draw do\n" do
         "\n  root :to => 'pages#home'\n"
       end
