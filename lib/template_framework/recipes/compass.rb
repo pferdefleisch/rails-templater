@@ -7,6 +7,8 @@ if yes?("\n[Stylesheets] Would you like to use Compass? [y|n]: ", Thor::Shell::C
     '4' => 'Compass with 960.gs'
   }
 
+  options[:compass_installed] = true
+
   print_table design_options.to_a, :ident => 4
   design_selection = ask("\nOption: ", Thor::Shell::Color::BLUE)
 
