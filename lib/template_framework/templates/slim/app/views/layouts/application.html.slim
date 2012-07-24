@@ -2,7 +2,6 @@ doctype html
 html
   head
     = csrf_meta_tag
-    title <%= @app_name %>
   body
     = yield
     = javascript_include_tag 'application'
