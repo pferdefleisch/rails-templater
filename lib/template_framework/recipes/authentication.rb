@@ -27,7 +27,7 @@ if yes?("\n[Authentication] Do you want authentication? [y|n]: ", Thor::Shell::C
     selection = ask("\nOptions: ", Thor::Shell::Color::BLUE)
 
     if no?("\n[Sorcery] Are you OK with User as your base authentication model? [y|n]: ", Thor::Shell::Color::BLUE)
-      auth_model = ask "\nWhich class name would you like to use? ex. Admin", Thor::Shell::Color::Blue
+      auth_model = ask "\nWhich class name would you like to use? ex. Admin", Thor::Shell::Color::BLUE
     end
 
     sorcery_path        = '../../templates/sorcery'
@@ -38,7 +38,7 @@ if yes?("\n[Authentication] Do you want authentication? [y|n]: ", Thor::Shell::C
     template File.expand_path("#{sorcery_views}/sessions/new.html.erb", __FILE__), 'app/views/sessions/new.html.erb'
 
     insert_into_file File.join('config', 'routes.rb'), :after => "Application.routes.draw do\n" do
-      "\nresources :sessions, :only => [:new, :create, :destroy]\n"
+      "\n  resources :sessions, :only => [:new, :create, :destroy]\n"
     end
 
     templater.post_bundler do
@@ -46,15 +46,29 @@ if yes?("\n[Authentication] Do you want authentication? [y|n]: ", Thor::Shell::C
       if auth_model.present?
         install_options = "#{install_options} --model #{auth_model}"
       end
-      generate "sorcery:install #{install_options}"
-      gsub_file 'config/sorcery.rb', '# user.username_attribute_names =', 'user.username_attribute_names = [:username, :email]'
       run "bundle exec rake db:create:all"
+      generate "sorcery:install #{install_options}"
+      gsub_file 'config/initializers/sorcery.rb', '# user.username_attribute_names =', 'user.username_attribute_names = [:username, :email]'
       run "bundle exec rake db:migrate"
     end
 
   when "2"
     gem 'devise'
+    model_name = ask("\nWhich model will be your user? [ex. User]", Thor::Shell::Color::BLUE)
     templater.post_bundler do
+      run "bundle exec rake db:create:all"
+      generate 'devise:install'
+      generate "devise #{model_name}"
+      if yes?("\nWould you like to install the devise views?", Thor::Shell::Color::BLUE)
+        generate 'devise:views'
+      end
+      run "bundle exec rake db:migrate"
+      template File.expand_path("../../devise/views/pages/home.html.erb", __FILE__),       'app/views/pages/home.html.erb'
+      template File.expand_path("../../devise/controllers/pages_controller.rb", __FILE__), 'app/controllers/pages_controller.rb'
+
+      insert_into_file File.join('config', 'routes.rb'), :after => "Application.routes.draw do\n" do
+        "\n  root :to => 'pages#home'\n"
+      end
     end
   end
 end
