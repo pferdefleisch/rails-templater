@@ -1,0 +1,17 @@
+<%= form_for @user, url: sessions_path %>
+  <fieldset>
+    <legend>Sign in</legend>
+    <%= label_tag :login %>
+    <%= text_field_tag :login %>
+    <%= label_tag :password %>
+    <%= password_field_tag :password %>
+  </fieldset>
+  <label for="remember_me">
+    <%= check_box_tag :remember_me %>
+  </label>
+  <div class="clearfix">
+    <div class="input">
+      <%= submit_tag "Sign in", class: "btn" %>
+    </div>
+  </div>
+<% end %>

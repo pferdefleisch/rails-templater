@@ -15,7 +15,7 @@
 development:
   adapter: postgresql
   encoding: unicode
-  database: <%= @application_name %>_development
+  database: <%= @app_name %>_development
   pool: 5
   username: <%= @username %>
   password:
@@ -41,7 +41,7 @@ development:
 test:
   adapter: postgresql
   encoding: unicode
-  database: <%= @application_name %>_test
+  database: <%= @app_name %>_test
   pool: 5
   username: <%= @username %>
   password:
@@ -49,7 +49,7 @@ test:
 production:
   adapter: postgresql
   encoding: unicode
-  database: <%= @application_name %>_production
+  database: <%= @app_name %>_production
   pool: 5
   username: <%= @username %>
   password:
