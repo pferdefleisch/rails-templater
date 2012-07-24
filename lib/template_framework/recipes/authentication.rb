@@ -10,12 +10,6 @@ if yes?("\n[Authentication] Do you want authentication? [y|n]: ", Thor::Shell::C
 
   case selection
   when "1"
-    install_sorcery
-  when "2"
-    install_devise
-  end
-
-  def install_sorcery
     gem 'sorcery'
 
     auth_options = {
@@ -30,7 +24,7 @@ if yes?("\n[Authentication] Do you want authentication? [y|n]: ", Thor::Shell::C
       '--migration' => 'Install Migrations'
     }
 
-    print_table options.to_a, :ident => 4
+    print_table auth_options.to_a, :ident => 4
     selection = ask("\nOption: ", Thor::Shell::Color::BLUE)
 
     if no?("\n[Sorcery] Are you OK with User as your base authentication model? [y|n]: ", Thor::Shell::Color::BLUE)
@@ -43,10 +37,10 @@ if yes?("\n[Authentication] Do you want authentication? [y|n]: ", Thor::Shell::C
         install_options = "#{install_options} --model #{auth_model}"
       end
       generate "sorcery:install #{install_options}"
+      rake "db:migrate"
     end
-  end
 
-  def install_devise
+  when "2"
     gem 'devise'
     templater.post_bundler do
     end

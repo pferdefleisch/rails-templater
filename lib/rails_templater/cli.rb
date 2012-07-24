@@ -6,7 +6,9 @@ module RailsTemplater
     desc "Generates a new Rails application with templater'"
 
     def run_templater
-      system("rails new #{application_name} -JO --skip-bundle -m #{RailsTemplater::template_runner}")
+      $app = application_name
+      rails_new = "rails new #{application_name} -O --skip-bundle -m #{RailsTemplater::template_runner}"
+      system(rails_new)
     end
   end
 end
