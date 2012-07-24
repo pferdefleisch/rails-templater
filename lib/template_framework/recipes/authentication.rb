@@ -57,13 +57,17 @@ if yes?("\n[Authentication] Do you want authentication? [y|n]: ", Thor::Shell::C
     model_name = ask("\nWhich model will be your user? [ex. User]", Thor::Shell::Color::BLUE)
     templater.post_bundler do
       run "bundle exec rake db:create:all"
+
       generate 'devise:install'
       generate "devise #{model_name}"
+
       if yes?("\nWould you like to install the devise views? [y|n]:", Thor::Shell::Color::BLUE)
         generate 'devise:views'
       end
+
       run "bundle exec rake db:migrate"
-      generate 'controller Page home'
+
+      generate 'controller pages home'
       insert_into_file File.join('config', 'routes.rb'), :after => "Application.routes.draw do\n" do
         "\n  root :to => 'pages#home'\n"
       end
