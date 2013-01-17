@@ -9,6 +9,6 @@ create_file 'README'
 create_file 'log/.gitkeep'
 create_file 'tmp/.gitkeep'
 
-get "http://html5shiv.googlecode.com/svn/trunk/html5.js", "public/javascripts/html5.js"
+#get "http://html5shiv.googlecode.com/svn/trunk/html5.js", "public/javascripts/html5.js"
 
 apply templater.recipe('git')
