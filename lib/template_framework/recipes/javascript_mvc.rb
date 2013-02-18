@@ -14,8 +14,9 @@ if yes?("\n[Javascript] Would you like to add a javascript MVC framework? [y|n]:
     end
   when "2"
     gem 'angularjs-rails'
-    templater.post_bundler do
-      generate 'angular:install'
-    end
+    insert_into_file(
+      "app/assets/javascripts/application.js",
+      "//= require angular\n//= require angular-resource\n",
+      :before => "//= require_tree .")
   end
 end
